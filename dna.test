@@ -1,0 +1,25 @@
+<?php
+
+    class dnatestcase extends DrupalUnitTestCase {
+        /*
+         * get info function displays test info for drupal interface
+        */
+        public static function getInfo(){
+            return array(
+                'name' => 'DNA Module Tests',
+                'description' => 'Tests to make sure the DNA module is return the correct nucleotide pairs',
+                'group' => 'AADNA',
+            );
+        }
+
+        /*
+         * function contains test for pair_dna function in .module file
+        */
+
+        function testPair_DNA(){
+            $result = pair_dna('hello');
+            $this->assertEqual($result, 'hello');
+        }
+
+
+    }

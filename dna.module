@@ -39,3 +39,7 @@ function results(){
     $var = $_SESSION['dna'];
     return "<p> This Works: $var</p>";
 }
+
+function pair_dna($variable){
+    return $variable;
+}
