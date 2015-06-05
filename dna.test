@@ -26,11 +26,20 @@
             $result = pair_dna('A');
             $this->assertEqual($result, 'A-T');
 
-            $result = pair_dna('a');
-            $this->assertEqual($result, 'A-T');
+            $result = pair_dna('C');
+            $this->assertEqual($result, 'C-G');
 
-            $result = pair_dna('a');
-            $this->assertEqual($result, 'A-T');
+            $result = pair_dna('G');
+            $this->assertEqual($result, 'G-C');
+
+            $result = pair_dna('AT');
+            $this->assertEqual($result, 'A-T, T-A');
+
+            $result = pair_dna('ACG');
+            $this->assertEqual($result, 'A-T, C-G, G-C');
+
+            $result = pair_dna('ATAAGC');
+            $this->assertEqual($result, 'A-T, T-A, A-T, A-T, G-C, C-G');
         }
 
 

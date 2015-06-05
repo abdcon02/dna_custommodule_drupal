@@ -66,8 +66,10 @@ function dna_form_submit($form, &$form_state){
 */
 
 function results(){
-    $var = $_SESSION['dna'];
-    return "<p> This Works: $var</p>";
+    $input = $_SESSION['dna'];
+    $result = pair_dna($input);
+
+    return "<p> Your DNA input was: $input </br> Your DNA sequence is: $result</p>";
 }
 
 /*
@@ -76,10 +78,24 @@ function results(){
 
 function pair_dna($variable){
     $variable = strtoupper($variable);
+    $length = strlen($variable);
     $result = '';
-    for($i = 0 ; $i < strlen($variable) ; $i++){
+
+    for($i = 0 ; $i < $length ; $i++){
+        if ($i > 0 && $i < $length) {
+            $result .= ', ';
+        }
         if($variable[$i] == 'A') {
             $result .= 'A-T';
+        }
+        if($variable[$i] == 'T') {
+            $result .= 'T-A';
+        }
+        if($variable[$i] == 'C') {
+            $result .= 'C-G';
+        }
+        if($variable[$i] == 'G'){
+            $result .= 'G-C';
         }
     }
     return $result;
