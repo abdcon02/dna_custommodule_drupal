@@ -17,8 +17,20 @@
         */
 
         function testPair_DNA(){
-            $result = pair_dna('hello');
-            $this->assertEqual($result, 'hello');
+            $result = pair_dna('a');
+            $this->assertEqual($result, 'A-T');
+
+            $result = pair_dna('t');
+            $this->assertEqual($result, 'T-A');
+
+            $result = pair_dna('A');
+            $this->assertEqual($result, 'A-T');
+
+            $result = pair_dna('a');
+            $this->assertEqual($result, 'A-T');
+
+            $result = pair_dna('a');
+            $this->assertEqual($result, 'A-T');
         }
 
 

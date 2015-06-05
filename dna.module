@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * dna form create menu item leading to url: dnaform with the dna_form
+ * dna_results is a callback from the form state redirection after the form submition
+*/
+
 function dna_menu(){
     $items['dnaform'] = array(
         'title' => 'DNA Form',
@@ -17,11 +22,17 @@ function dna_menu(){
     return $items;
 }
 
+/*
+ * dna_form creates a single form with 1 input for entering nucleotides
+*/
+
 function dna_form(){
     $form['dna_input'] = [
         '#title' => 'Nucleotide input',
         '#type' => 'textfield',
         '#description' => t('Enter nucleotides you would like paired'),
+        '#element_validate' => array('element_validate_nucleotide'),
+        '#required' => TRUE,
     ];
     $form['submit'] = [
         '#type' => 'submit',
@@ -30,16 +41,46 @@ function dna_form(){
     return $form;
 }
 
+/*
+ * validation function attached to form taking the element as an argument and returning error message if
+ * validation is not met
+*/
+
+function element_validate_nucleotide($element){
+    if(preg_match("/[^atcg ]/i", $element['#value'])){
+        form_error($element, t('The Input can only contain the letters: A,T,C,G, and spaces'));
+    }
+}
+
+/*
+ * on form submition, function stores form input in session variable and redirects callback page
+*/
+
 function dna_form_submit($form, &$form_state){
     $_SESSION['dna'] = $form_state['values']['dna_input'];
     $form_state['redirect'] = 'dna_results';
 }
+
+/*
+ * displays results on callback page dna_results
+*/
 
 function results(){
     $var = $_SESSION['dna'];
     return "<p> This Works: $var</p>";
 }
 
+/*
+ * function takes input and calculates nucleotide pairs, returning them in a string
+*/
+
 function pair_dna($variable){
-    return $variable;
+    $variable = strtoupper($variable);
+    $result = '';
+    for($i = 0 ; $i < strlen($variable) ; $i++){
+        if($variable[$i] == 'A') {
+            $result .= 'A-T';
+        }
+    }
+    return $result;
 }
