@@ -1,6 +1,6 @@
 <?php
 
-    class dnatestcase extends DrupalUnitTestCase {
+    class dnaunittestcase extends DrupalUnitTestCase {
         /*
          * get info function displays test info for drupal interface
         */
@@ -43,4 +43,34 @@
         }
 
 
+    }
+
+    class dnawebtestcase extends DrupalWebTestCase {
+
+        public static function getInfo(){
+            return array(
+                'name' => 'DNA Module Web Tests',
+                'description' => 'Tests to make sure the DNA module is return the correct nucleotide pairs',
+                'group' => 'AADNA',
+            );
+        }
+
+        public function setUp(){
+            parent::setUp(array('dna'));
+
+            $info = array();
+            $info['dna_input'] = 'A';
+            $this->drupalPost('dnaform', $info, t('Submit'));
+            $path['source'] = 'dnaform';
+            $path['alias'] = 'dna_form';
+            path_save($path);
+        }
+
+        public function testFormSubmit(){
+            $this->drupalGet('dna_form');
+            $this->assertText("DNA Form", 'The form page loads.');
+
+            $this->drupalGet('dna_results');
+            $this->assertText('A-T', 'Form submission displays correct output');
+        }
     }
