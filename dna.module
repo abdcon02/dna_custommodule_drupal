@@ -1,0 +1,41 @@
+<?php
+
+function dna_menu(){
+    $items['dnaform'] = array(
+        'title' => 'DNA Form',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('dna_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['dna_results'] = array(
+        'title' => 'Matching Sequence',
+        'page callback' => 'results',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function dna_form(){
+    $form['dna_input'] = [
+        '#title' => 'Nucleotide input',
+        '#type' => 'textfield',
+        '#description' => t('Enter nucleotides you would like paired'),
+    ];
+    $form['submit'] = [
+        '#type' => 'submit',
+        '#value' => 'Submit',
+    ];
+    return $form;
+}
+
+function dna_form_submit($form, &$form_state){
+    $_SESSION['dna'] = $form_state['values']['dna_input'];
+    $form_state['redirect'] = 'dna_results';
+}
+
+function results(){
+    $var = $_SESSION['dna'];
+    return "<p> This Works: $var</p>";
+}

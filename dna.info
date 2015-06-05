@@ -1,0 +1,7 @@
+name = DNA Pairing
+description = Pairs dna nucleotides from input
+package = Epicodus Examples
+core = 7.x
+files[] = dna.module
+files[] = dna.test
+dependencies = simpletest
